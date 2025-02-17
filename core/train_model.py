@@ -1,4 +1,4 @@
-# Módulo para entrenamiento de modelos.
+# core/train_model.py
 
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.tree import DecisionTreeClassifier
@@ -44,8 +44,15 @@ class ModelTrainer:
         if model_type not in self.models:
             raise ValueError(f"Tipo de modelo no válido. Opciones: {list(self.models.keys())}")
 
+        # Asegurarnos que data es un DataFrame
+        if not isinstance(data, pd.DataFrame):
+            raise TypeError("Los datos deben ser un DataFrame de pandas")
+
         # Separar características y etiquetas
-        X = data.drop('is_optimal', axis=1)
+        if 'is_optimal' not in data.columns:
+            raise ValueError("El DataFrame debe contener la columna 'is_optimal'")
+
+        X = data.drop(['is_optimal'], axis=1)
         y = data['is_optimal']
 
         # Dividir datos en entrenamiento y prueba
@@ -106,35 +113,3 @@ class ModelTrainer:
             raise ValueError(f"Tipo de modelo no válido. Opciones: {list(self.models.keys())}")
 
         self.models[model_type].set_params(**params)
-
-# Ejemplo de uso
-if __name__ == "__main__":
-    # Cargar datos de ejemplo
-    from utils.preprocessing import analyze_code_metrics
-
-    data, _ = analyze_code_metrics('../data/train/code_metrics.csv')
-
-    # Crear entrenador
-    trainer = ModelTrainer()
-
-    # Entrenar modelo Random Forest
-    rf_model, rf_metrics = trainer.train_model(data, 'random_forest')
-
-    print("\n=== Métricas del Modelo Random Forest ===")
-    print(f"Precisión en entrenamiento: {rf_metrics['train_score']:.3f}")
-    print(f"Precisión en pruebas: {rf_metrics['test_score']:.3f}")
-
-    print("\nImportancia de características:")
-    for feature, importance in sorted(
-        rf_metrics['feature_importance'].items(),
-        key=lambda x: x[1],
-        reverse=True
-    ):
-        print(f"{feature}: {importance:.3f}")
-
-    # Entrenar modelo Decision Tree
-    dt_model, dt_metrics = trainer.train_model(data, 'decision_tree')
-
-    print("\n=== Métricas del Modelo Decision Tree ===")
-    print(f"Precisión en entrenamiento: {dt_metrics['train_score']:.3f}")
-    print(f"Precisión en pruebas: {dt_metrics['test_score']:.3f}")

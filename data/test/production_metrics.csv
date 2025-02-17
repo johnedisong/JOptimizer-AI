@@ -1,0 +1,11 @@
+lines_of_code,effective_lines,number_of_methods,cyclomatic_complexity,inheritance_depth,number_of_branches,coupling_between_objects,external_dependencies,lack_of_cohesion,class_type
+228,146,10,9,0,11,2,2,0.47696093078724217,Util
+134,134,10,7,2,13,5,4,0.343830302384458,Controller
+145,138,13,6,1,28,6,4,0.4846442142489543,Controller
+133,45,4,4,1,14,3,2,0.14944219367941838,Repository
+346,259,16,6,3,24,5,5,0.45267948173414685,Service
+197,197,9,1,1,19,4,3,0.20680212556155664,Controller
+370,189,11,12,0,24,5,1,0.297184103903473,Util
+185,115,9,1,1,4,2,1,0.13790395533122965,Model
+172,91,14,4,2,26,6,2,0.25742754467083967,Controller
+53,53,7,4,1,5,2,3,0.3239172628212581,Repository

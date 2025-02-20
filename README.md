@@ -69,8 +69,11 @@ Este script genera un conjunto balanceado de datos de entrenamiento con métrica
 
 ### 2. Entrenamiento del Modelo
 ```bash
-python scripts/run_training.py --data ./data/train/code_metrics.csv --model-type random_forest --output ./models/mi_modelo.joblib
+python python scripts/run_training.py --data data/train/code_metrics.csv --model-type random_forest --output models/mi_modelo.joblib
 ```
+Importante definir siempre un nombre del modelo al cual al final se le va concatenar el timestamp de la hora de ejecución.
+
+
 Opciones:
 - `--model-type`: 'random_forest' o 'decision_tree'
 - `--data`: Ruta al archivo CSV de entrenamiento
@@ -84,7 +87,7 @@ Genera datos que simulan métricas de código Java real para pruebas.
 
 ### 4. Análisis de Código
 ```bash
-python scripts/run_production_test.py --model ./models/mi_modelo.joblib --data ./data/test/production_metrics.csv
+python scripts/run_production_test.py --model ./models/NOMBRE_DEL_MODELO --data ./data/test/production_metrics.csv
 ```
 Analiza código Java y proporciona recomendaciones de optimización.
 

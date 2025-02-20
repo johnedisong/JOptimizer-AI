@@ -9,7 +9,22 @@ from core.model_handler import ModelHandler
 import pandas as pd
 import argparse
 
+def get_project_root():
+    return os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+def ensure_directories_exist():
+    project_root = get_project_root()
+    required_dirs = ['data/train', 'models']
+    for directory in required_dirs:
+        dir_path = os.path.join(project_root, directory)
+        os.makedirs(dir_path, exist_ok=True)
+        print(f"Verificado directorio: {dir_path}")
+
 def main():
+    # Asegurar que existan los directorios necesarios
+    ensure_directories_exist()
+    project_root = get_project_root()
+
     parser = argparse.ArgumentParser(description='Entrenar modelo de clasificación de código')
     parser.add_argument('--data', type=str, required=True, help='Ruta al archivo CSV de entrenamiento')
     parser.add_argument('--model-type', type=str, default='random_forest',
@@ -22,9 +37,13 @@ def main():
     print(f"Entrenando modelo {args.model_type}...")
 
     try:
+        # Convertir rutas relativas a absolutas
+        data_path = os.path.join(project_root, args.data)
+        output_path = os.path.join(project_root, args.output)
+
         # Cargar datos
-        print(f"Cargando datos desde {args.data}")
-        training_data = pd.read_csv(args.data)
+        print(f"Cargando datos desde {data_path}")
+        training_data = pd.read_csv(data_path)
         print(f"Datos cargados: {len(training_data)} muestras")
         print(f"Columnas disponibles: {training_data.columns.tolist()}")
 
@@ -43,28 +62,21 @@ def main():
         print("Iniciando entrenamiento...")
         model, metrics = trainer.train_model(training_data, args.model_type)
 
+        # Asegurar que el directorio de salida existe
+        os.makedirs(os.path.dirname(output_path), exist_ok=True)
+
         # Guardar modelo con métricas como metadata
-        print("Guardando modelo...")
-        handler.save_model(model, args.output, metrics)
+        print(f"Guardando modelo en {output_path}...")
+        handler.save_model(model, output_path, metrics)
 
-        print(f"\nModelo entrenado y guardado en: {args.output}")
+        print(f"\nModelo entrenado y guardado exitosamente")
         print(f"Precisión en pruebas: {metrics['test_score']:.3f}")
-
-        # Mostrar matriz de confusión
-        print("\nMatriz de Confusión:")
-        print(metrics['confusion_matrix'])
-
-        if args.model_type == 'random_forest':
-            print("\nImportancia de características:")
-            for feature, importance in sorted(
-                metrics['feature_importance'].items(),
-                key=lambda x: x[1],
-                reverse=True
-            ):
-                print(f"{feature}: {importance:.3f}")
 
     except Exception as e:
         print(f"Error durante el entrenamiento: {str(e)}")
+        print(f"Ruta del proyecto: {project_root}")
+        print(f"Ruta de datos: {data_path}")
+        print(f"Ruta de salida: {output_path}")
         raise
 
 if __name__ == "__main__":

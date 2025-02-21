@@ -165,6 +165,15 @@ Para cada clase analizada, se proporciona:
 - Métricas problemáticas específicas
 - Recomendaciones de mejora
 
+## Ejecución de Prueba
+Se tiene la libreria final que implementa todo el desarrollo la cual se denomina **AIlibrary.py**
+esta se puede implementar como se muestra en el ejemplo **App.py** siga las indicaciones mostradas
+en dicha clase y finalmente ejecute desde la raiz del proyecto el siguiente comando:
+
+```bash
+python App.py
+```
+
 ## Desarrollado por
 - Juan Sebastian Fernando Veloza Ceron
 - Angelica Daniela Quevedo Cortes

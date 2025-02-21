@@ -103,7 +103,7 @@ if __name__ == "__main__":
     production_data = generate_production_metrics(10)
 
     # Guardar datos
-    output_file = '../data/test/production_metrics.csv'
+    output_file = 'data/test/production_metrics.csv'
     production_data.to_csv(output_file, index=False)
 
     print("\nEstadísticas de los datos generados:")

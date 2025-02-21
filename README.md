@@ -32,7 +32,7 @@ source venv/bin/activate
 
 3. Instalar dependencias:
 ```bash
-pip install -r requirements.txt
+    pip install -r requirements.txt
 ```
 
 ## Estructura del Proyecto
@@ -61,6 +61,53 @@ JOptimizer-AI/
 
 ## Uso
 
+## Configuración de Algoritmos de Machine Learning
+
+A continuación se describen los parámetros configurables para los algoritmos de Machine Learning utilizados en el entrenamiento de modelos.
+
+📌 **Ubicación de la configuración:**
+Los parámetros se encuentran en el archivo `parameters.json`, ubicado en la carpeta `config/` dentro del proyecto.
+
+```
+config/
+│── parameters.json
+```
+
+## 📌 **Modelos Disponibles**
+### 🔹 **Random Forest**
+Parámetros ajustables para el modelo `RandomForestClassifier`:
+- **`n_estimators`** *(int)* → Número de árboles en el bosque. *(Por defecto: 100)*
+- **`max_depth`** *(int or None)* → Profundidad máxima de cada árbol. *(Por defecto: 10)*
+- **`min_samples_split`** *(int)* → Número mínimo de muestras requeridas para dividir un nodo. *(Por defecto: 2)*
+- **`min_samples_leaf`** *(int)* → Número mínimo de muestras requeridas en una hoja. *(Por defecto: 1)*
+
+### 🔹 **Decision Tree**
+Parámetros ajustables para el modelo `DecisionTreeClassifier`:
+- **`max_depth`** *(int or None)* → Profundidad máxima del árbol. *(Por defecto: 10)*
+- **`min_samples_split`** *(int)* → Número mínimo de muestras requeridas para dividir un nodo. *(Por defecto: 2)*
+- **`min_samples_leaf`** *(int)* → Número mínimo de muestras requeridas en una hoja. *(Por defecto: 1)*
+
+---
+
+## ⚙ **Configuración de Entrenamiento**
+- **`test_size`** *(float)* → Proporción de los datos reservados para pruebas. *(Por defecto: 0.2)*
+- **`random_state`** *(int)* → Semilla para la reproducción de resultados. *(Por defecto: 42)*
+
+---
+
+## 🔄 **Preprocesamiento de Datos**
+- **`normalize`** *(bool)* → Indica si se debe normalizar los datos antes del entrenamiento. *(Por defecto: `true`)*
+- **`remove_outliers`** *(bool)* → Indica si se deben eliminar valores atípicos. *(Por defecto: `true`)*
+
+### 📌 **Notas**
+- Estos valores pueden ser modificados en el archivo `config/parameters.json` según las necesidades del entrenamiento.
+- La configuración afecta la calidad y velocidad del modelo entrenado.
+- Se recomienda experimentar con distintos valores para optimizar el rendimiento.
+
+🚀 **Modifica estos parámetros en el archivo de configuración para ajustar el comportamiento del modelo según tus necesidades.**
+
+
+
 ### 1. Generación de Datos de Entrenamiento
 ```bash
 python scripts/generate_balanced_data.py
@@ -88,6 +135,11 @@ Genera datos que simulan métricas de código Java real para pruebas.
 ### 4. Análisis de Código
 ```bash
 python scripts/run_production_test.py --model ./models/NOMBRE_DEL_MODELO --data ./data/test/production_metrics.csv
+```
+por ejemplo 
+
+```bash
+python scripts/run_production_test.py --model ./models/mi_modelo444_20250220_200717.joblib --data ./data/test/production_metrics.csv
 ```
 Analiza código Java y proporciona recomendaciones de optimización.
 

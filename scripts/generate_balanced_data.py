@@ -84,7 +84,7 @@ if __name__ == "__main__":
     data = generate_balanced_dataset(1000)
 
     # Guardar datos
-    data.to_csv('../data/train/code_metrics.csv', index=False)
+    data.to_csv('data/train/code_metrics.csv', index=False)
 
     # Mostrar estadísticas
     print("\nEstadísticas del conjunto de datos generado:")
